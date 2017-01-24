@@ -1,5 +1,12 @@
 extends ../layouts/app
 
 block content
-    h1 Détails #{sensor._id}
-    
+    h2 Détails de #{sensor._id}
+    p Value : #{sensor.headingTrue.value}
+    p Source : #{sensor.headingTrue.$source}
+    p Sentence : #{sensor.headingTrue.sentence}
+    p Timestamp : #{sensor.headingTrue.timestamp}
+    div
+        a.btn.btn-info(href="/sensor/#{sensor._id}/edit") Editer
+        a.btn.btn-danger(href="/sensor/#{sensor._id}/delete") Supprimer
+

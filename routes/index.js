@@ -18,10 +18,10 @@ router.get('/home', UserController.home);
 // Simulator
 router.get('/sensors', SensorController.index);
 router.get('/sensor/:id', SensorController.show);
-// router.get('/sensor/create', SensorController.create);
-// router.post('/sensor', SensorController.store);
-// router.get('/sensor/{id}/edit', SensorController.edit);
-// router.post('/sensor/{id}/update', SensorController.update);
-// router.post('/sensor/{id}/delete', SensorController.destroy);
+router.get('/sensor/create', SensorController.create);
+router.get('/sensor/:id/edit', SensorController.edit);
+router.post('/sensor/store', SensorController.store);
+router.post('/sensor/:id/update', SensorController.update);
+router.post('/sensor/:id/delete', SensorController.delete);
 
 module.exports = router;

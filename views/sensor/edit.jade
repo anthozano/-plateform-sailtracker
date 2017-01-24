@@ -1,0 +1,23 @@
+extends ../layouts/app
+
+block content
+    h2 Edit #{sensor._id}
+    form.col-sm-8(method="POST" action="/sensor/#{sensor._id}/update")
+        div.form-group
+            label(for="id") ID
+            input#id.form-control(value="#{sensor._id}" type="text", name="_id" readonly)
+        div.form-group
+            label(for="value") Value
+            input#value.form-control(value="#{sensor.headingTrue.value}" type="text", name="value", placeholder="Value")
+        div.form-group
+            label(for="source") Source
+            input#source.form-control(value="#{sensor.headingTrue.$source}" type="text", name="$source", placeholder="Source")
+        div.form-group
+            label(for="sentence") Sentence
+            input#sentence.form-control(value="#{sensor.headingTrue.sentence}" type="text", name="sentence", placeholder="Sentence")
+        div.form-group
+            label(for="timestamp") timestamp
+            input#timestamp.form-control(value="#{sensor.headingTrue.timestamp}" type="text", name="timestamp", placeholder="Timestamp")
+        button(type="submit" class="btn btn-primary") Submit
+
+

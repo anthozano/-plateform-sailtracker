@@ -5,7 +5,13 @@ block content
         thead
             tr
                 th Capteur
+                th
+                th
         each sensor in sensors
             tr
                 td
-                    a(href="/sensor/#{sensor._id}") #{sensor}
+                    #{sensor}
+                td
+                    a.btn.btn.btn-default(href="/sensor/#{sensor._id}") Voir
+                td
+                    a.btn.btn-primary(href="/sensor/#{sensor._id}/edit") Editer
