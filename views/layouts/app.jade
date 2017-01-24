@@ -1,0 +1,17 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+body
+    include navbar
+    div.container(style="padding-top: 80px")
+        if error
+            div.alert.alert-danger
+                strong #{error}
+        if warning
+            div.alert.alert-warning
+                strong #{warning}
+        block content
+

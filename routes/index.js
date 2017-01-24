@@ -1,0 +1,60 @@
+var express = require('express');
+var router = express.Router();
+var fs = require('fs');
+var User = require('./../models/user');
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+router.get('/home', function (req, res) {
+  console.log(req.session.user);
+  if (req.session.user) {
+    res.render('users/index', {username : req.session.user.username});
+  } else {
+    req.session.warning = true;
+    res.redirect('/login');
+  }
+});
+
+router.get('/login', function (req, res) {
+  if (req.session.warning) {
+    req.session.warning = undefined;
+    res.render('users/login', {warning: "You're not allowed to access this page, you've been redirected here."});
+  } else {
+    res.render('users/login');
+  }
+});
+
+router.post('/login', function (req, res) {
+  if (req.session.attempt) {
+    req.session.attempt = req.session.attempt + 1;
+  } else {
+    req.session.attempt = 1;
+  }
+  if (req.session.attempt < 3) {
+    User.findOne(req.body, function (err, user) {
+      if (err) return console.error(err);
+      if (user) {
+        console.log(user);
+        req.session.attempt = 0;
+        req.session.user = user;
+        res.redirect('/home');
+      } else {
+        res.render('users/login')
+      }
+    });
+  } else {
+    res.render('users/login', {error: "Sorry, it's at least your 3rd attempt to login and fail, you are now blocked !"});
+  }
+});
+
+router.post('/sensor', function (req, res, next) {
+  console.log("Received form :" + req.ip);
+  console.log(req.body);
+  res.send("Data received");
+  next();
+});
+
+module.exports = router;
