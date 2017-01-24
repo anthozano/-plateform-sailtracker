@@ -1,0 +1,11 @@
+extends ../layouts/app
+
+block content
+    table.table.table-striped
+        thead
+            tr
+                th Capteur
+        each sensor in sensors
+            tr
+                td
+                    a(href="/sensor/#{sensor._id}") #{sensor}
