@@ -1,14 +1,13 @@
 var mongoose = require('mongoose');
 
-var userSchema = mongoose.Schema({
-  headingTrue: {
-    value: Number,
-    $source: String,
-    sentence: String,
-    timestamp: String
+var sensorSchema = mongoose.Schema({
+  "navigation": {
+    "courseOverGround": {
+      "value": Number
+    }
   }
 });
 
-var Sensor = mongoose.model('sensor', userSchema);
+var Sensor = mongoose.model('sensor', sensorSchema);
 
 module.exports = Sensor;

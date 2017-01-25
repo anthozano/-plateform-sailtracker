@@ -3,14 +3,13 @@ var request = require('request');
 var Sensor = {
   sendRequest: function (target) {
     var options = {
-      uri: "http://localhost:3000/simulator",
+      uri: "http://localhost:3000/sensors/create",
       method: 'POST',
       json: {
-        "headingTrue": {
-          "value": Math.floor(Math.random() * 360),
-          "$source": "nmea0183-1.II",
-          "sentence": "HDT",
-          "timestamp": "2014-03-24T00:15:41Z"
+        "navigation": {
+          "courseOverGround": {
+            "value": Math.random() * 20
+          }
         }
       }
     };
