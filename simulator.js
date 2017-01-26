@@ -13,5 +13,8 @@ console.log(ini);
 //     })
 // }
 
-setInterval(Sensor.sendRequest, 2000);
+// setInterval(Sensor.sendRequest, 2000);
 
+for (var i = 0; i < 200; i++) {
+  Sensor.sendRequest();
+}

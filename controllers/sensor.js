@@ -12,20 +12,19 @@ var SensorController = {
     });
   },
   read: function(req, res) {
-    console.log(req.params.id);
-    Sensor.find({"_id": "5888af354a3eb933809f6517"}, function(err, sensor) {
+    Sensor.find({"_id": req.params.id}, function(err, sensor) {
       if (err) {
         res.sendStatus(404);
       } else {
-        res.sendStatus(200);
+        res.send(sensor);
       }
-
-    })
+    });
   },
   update: function(req, res) {
     Sensor.findOneAndUpdate({"_id": req.params.id}, req.body, function (err, sensor) {
       if (err) {
         console.log(err);
+        res.sendStatus(500);
       } else {
         res.sendStatus(200);
       }
@@ -35,11 +34,12 @@ var SensorController = {
     Sensor.findOneAndRemove({"_id": req.params.id}, function (err, sensor) {
       if (err) {
         console.log(err);
+        res.sendStatus(500);
       } else {
         res.sendStatus(200);
       }
     })
-  },
+  }
 };
 
 module.exports = SensorController;
