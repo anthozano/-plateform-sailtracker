@@ -1,12 +1,21 @@
 extends ../layouts/app
 
 block content
-    h1 Dashboard
+    h1 Sign up
     form.col-sm-8(method="POST")
         div.form-group
-            label(for="username") Username
-            input#username.form-control(type="text", name="username", placeholder="Username")
+            label(for="name") Name
+            input#name.form-control(type="text", name="name", placeholder="Name")
         div.form-group
-            label(for="password") Password
-            input#password.form-control(type="password", name="password", placeholder="Password")
-        button(type="submit" class="btn btn-primary") Submit
+            label(for="surname") Surname
+            input#surname.form-control(type="text", name="surname", placeholder="Surname")
+        div.form-group
+            label(for="email") Email
+            input#email.form-control(type="email", name="email", placeholder="Email address")
+        div.form-group
+            label(for="username") Username *
+            input#username.form-control(type="text", name="username", placeholder="Username" required)
+        div.form-group
+            label(for="password") Password *
+            input#password.form-control(type="password", name="password", placeholder="Password" required)
+        button(type="submit" class="btn btn-primary") Sign me up
