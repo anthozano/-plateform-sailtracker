@@ -1,12 +1,14 @@
 var mongoose = require('mongoose');
+var request = require('request');
 
 var sensorSchema = mongoose.Schema({
-  "navigation": {
-    "courseOverGround": {
-      "value": Number
-    }
+  type: String,
+  data: [],
+  site: {
+    _id: mongoose.Schema.Types.ObjectId,
+    name: String
   }
-});
+}, {timestamps: true});
 
 var Sensor = mongoose.model('sensor', sensorSchema);
 
