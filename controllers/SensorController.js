@@ -1,19 +1,26 @@
-var Sensor = require('../models/sensor');
+var Sensor = require('../models/Sensor');
+var Mongoose = require('mongoose');
 
 var SensorController = {
   create: function(req, res) {
     sensor = new Sensor(req.body);
-    sensor.save(function(err, sensor) {
+    sensor._id = Mongoose.Types.ObjectId();
+    sensor.save(function(err, s) {
       if (err) {
         res.sendStatus(400);
+        console.log(err);
       } else {
+        console.log(s._id);
         res.sendStatus(200);
       }
     });
   },
   read: function(req, res) {
-    Sensor.find({"_id": req.params.id}, function(err, sensor) {
+    Sensor.findOne({"_id": req.params.id}, function(err, sensor) {
       if (err) {
+        console.error(err);
+        res.sendStatus(500);
+      } else if (sensor == null) {
         res.sendStatus(404);
       } else {
         res.send(sensor);
@@ -39,6 +46,10 @@ var SensorController = {
         res.sendStatus(200);
       }
     })
+  },
+  test: function (req, res) {
+    console.log(req.body);
+    res.sendStatus(200);
   }
 };
 

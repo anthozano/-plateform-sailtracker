@@ -1,7 +1,6 @@
 var User = require('../models/user');
 
 var UserController = {
-
   index: function(req, res) {
     if (req.session.warning) {
       req.session.warning = undefined;
@@ -10,7 +9,6 @@ var UserController = {
       res.render('users/login');
     }
   },
-
   login: function(req, res) {
     if (req.session.attempt) {
       req.session.attempt = req.session.attempt + 1;
@@ -34,7 +32,6 @@ var UserController = {
       res.render('users/login', {error: "Sorry, it's at least your 3rd attempt to login and fail, you are now blocked !"});
     }
   },
-
   home: function (req, res) {
     console.log(req.session.user);
     if (req.session.user) {
