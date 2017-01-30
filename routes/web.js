@@ -14,8 +14,10 @@ router.get('/', function(req, res, next) {
 });
 
 // User
-router.get('/login', UserController.index);
+router.get('/login', UserController.signin);
 router.post('/login', UserController.login);
+router.post('/signup', UserController.signup);
+router.post('/signup', UserController.create);
 router.get('/home', UserController.home);
 
 router.get('/livemap', LiveMapController.index);

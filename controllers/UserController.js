@@ -1,7 +1,7 @@
 var User = require('../models/user');
 
 var UserController = {
-  index: function(req, res) {
+  signin: function(req, res) {
     if (req.session.warning) {
       req.session.warning = undefined;
       res.render('users/login', {warning: "You're not allowed to access this page, you've been redirected here."});
@@ -40,6 +40,12 @@ var UserController = {
       req.session.warning = true;
       res.redirect('/login');
     }
+  },
+  signup: function (req, res) {
+    res.render('/signup')
+  },
+  create: function (req, res) {
+    res.redirect('/home');
   }
 };
 
