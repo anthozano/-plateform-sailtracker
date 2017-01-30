@@ -1,0 +1,39 @@
+extends ../layouts/app
+
+block head
+    script(type="text/javascript", src="https://www.gstatic.com/charts/loader.js")
+    script(type="text/javascript").
+        google.charts.load('current', {packages: ['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            // Define the chart to be drawn.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Element');
+            data.addColumn('number', 'Percentage');
+            data.addRows([
+            ['Nitrogen', 0.78],
+            ['Oxygen', 0.21],
+            ['Other', 0.01]
+            ]);
+
+            // Instantiate and draw the chart.
+            var chartPosition = new google.visualization.PieChart(document.getElementById('chartPosition'));
+            var chartCourse = new google.visualization.PieChart(document.getElementById('chartCourse'));
+            var chartHeading = new google.visualization.PieChart(document.getElementById('chartHeading'));
+            chartPosition.draw(data, null);
+            chartCourse.draw(data, null);
+            chartHeading.draw(data, null);
+        }
+block content
+    h1 Dashboard
+    div#chartPosition
+    div#chartCourse
+    div#chartHeading
+    p.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

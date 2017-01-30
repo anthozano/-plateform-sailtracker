@@ -1,0 +1,15 @@
+extends ../layouts/app
+
+block head
+    script(src="http://maps.google.com/maps/api/js")
+    script(src="/javascripts/plugin/gmaps.js")
+
+block content
+    h1 Livemap
+    div#map
+    script.
+        var map = new GMaps({
+          el: '#map',
+          lat: 46.160329,
+          lng: -1.1511390000000574
+        });

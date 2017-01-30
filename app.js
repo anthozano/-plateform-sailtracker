@@ -4,22 +4,23 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session')
+var session = require('express-session');
 
-// DB
+// Connecting to database
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/users');
+mongoose.connect('mongodb://localhost/sailtracker');
 
-var index = require('./routes/index');
+var webRoutes = require('./routes/web');
+var sensorsRoutes = require('./routes/sensors');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,7 +34,9 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-app.use('/', index);
+// Routers
+app.use(sensorsRoutes);
+app.use(webRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,13 +55,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// dynamically include routes (Controller)
-/*fs.readdirSync('./controllers').forEach(function (file) {
-  if(file.substr(-3) == '.js') {
-    route = require('../controllers/' + file);
-    route.controller(app);
-  }
-});*/
 
 module.exports = app;
