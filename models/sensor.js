@@ -10,6 +10,20 @@ var sensorSchema = mongoose.Schema({
   }
 }, {timestamps: true});
 
+sensorSchema.methods.sendData = function(target, method) {
+  var options = {
+    uri: target,
+    method: method,
+    json: this
+  };
+  console.log("Sending " + options.method + " request to " + options.uri);
+  request(options, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log("Server response: " + body);
+    }
+  });
+};
+
 var Sensor = mongoose.model('sensor', sensorSchema);
 
 module.exports = Sensor;
