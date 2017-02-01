@@ -2,6 +2,7 @@ var Sensor = require('../models/Sensor');
 var Mongoose = require('mongoose');
 
 var SensorController = {
+
   create: function(req, res) {
     sensor = new Sensor(req.body);
     sensor._id = Mongoose.Types.ObjectId();
@@ -15,6 +16,7 @@ var SensorController = {
       }
     });
   },
+
   read: function(req, res) {
     Sensor.findOne({"_id": req.params.id}, function(err, sensor) {
       if (err) {
@@ -27,6 +29,7 @@ var SensorController = {
       }
     });
   },
+
   update: function(req, res) {
     Sensor.findOneAndUpdate({"_id": req.params.id}, req.body, function (err, sensor) {
       if (err) {
@@ -37,6 +40,7 @@ var SensorController = {
       }
     })
   },
+
   delete: function(req, res) {
     Sensor.findOneAndRemove({"_id": req.params.id}, function (err, sensor) {
       if (err) {
@@ -47,6 +51,7 @@ var SensorController = {
       }
     })
   },
+
   test: function (req, res) {
     console.log(req.body);
     res.sendStatus(200);

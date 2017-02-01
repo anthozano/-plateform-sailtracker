@@ -3,33 +3,39 @@ extends ../layouts/app
 block head
     script(type="text/javascript", src="https://www.gstatic.com/charts/loader.js")
     script(type="text/javascript").
-        google.charts.load('current', {packages: ['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawBasic);
 
-        function drawChart() {
-            // Define the chart to be drawn.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Element');
-            data.addColumn('number', 'Percentage');
-            data.addRows([
-            ['Nitrogen', 0.78],
-            ['Oxygen', 0.21],
-            ['Other', 0.01]
-            ]);
+      function drawBasic() {
 
-            // Instantiate and draw the chart.
-            var chartPosition = new google.visualization.PieChart(document.getElementById('chartPosition'));
-            var chartCourse = new google.visualization.PieChart(document.getElementById('chartCourse'));
-            var chartHeading = new google.visualization.PieChart(document.getElementById('chartHeading'));
-            chartPosition.draw(data, null);
-            chartCourse.draw(data, null);
-            chartHeading.draw(data, null);
-        }
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Boat');
+        data.addColumn('number', 'Average speed');
+
+        data.addRows([
+          ["Boat 1", 13],
+          ["Boat 2", 22],
+          ["Boat n", 19]
+        ]);
+
+        var options = {
+          title: 'Speed average per boat',
+          hAxis: {
+            title: 'Boat',
+          },
+          vAxis: {
+            title: 'Speed (kts)'
+          }
+        };
+
+        var chart = new google.visualization.ColumnChart(
+            document.getElementById('chartSpeed'));
+
+        chart.draw(data, options);
+      }
 block content
     h1 Dashboard
-    div#chartPosition
-    div#chartCourse
-    div#chartHeading
+    div#chartSpeed
     p.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
