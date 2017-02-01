@@ -5,27 +5,30 @@ var mongoose = require('mongoose');
 
 var DashboardController = {
   index: function (req, res) {
-    var sensors = [];
-    var cursor = Sensor.aggregate(
+    Sensor.aggregate(
         [
           {$match: {type: "speed"}},
           {$unwind: "$data"},
           {
             $group: {
-              _id: "$site._id",
+              _id: "$site.name",
               speedAvg: {$avg: "$data.value"}
             }
           }
-        ]).cursor().exec();
-    cursor.each(function (err, sensor) {
+        ]).exec(function (err, speed) {
       if (err) {
         console.log(err);
         res.send(err);
+      } else {
+        var datah = [];
+        var datar = [];
+        for (var i = 0; i < speed.length; i++) {
+          datah.push('"' + speed[i]._id + '"');
+          datar.push(speed[i].speedAvg);
+        }
+        res.render('dashboard/index', {datahs: datah, datars: datar})
       }
-      sensors.push(sensor);
     });
-    console.log(sensors);
-    res.render('dashboard/index')
   }
 };
 

@@ -12,16 +12,19 @@ block head
         data.addColumn('string', 'Boat');
         data.addColumn('number', 'Average speed');
 
-        data.addRows([
-          ["Boat 1", 13],
-          ["Boat 2", 22],
-          ["Boat n", 19]
-        ]);
+        var datar = [!{datars}];
+        var datah = [!{datahs}];
+        var dataRow = [];
+        for (var i = 0; i < datah.length && i < datar.length; i++) {
+          dataRow.push([datah[i], datar[i]]);
+        }
+
+        data.addRows(dataRow);
 
         var options = {
           title: 'Speed average per boat',
           hAxis: {
-            title: 'Boat',
+            title: 'Boat'
           },
           vAxis: {
             title: 'Speed (kts)'
@@ -35,7 +38,35 @@ block head
       }
 block content
     h1 Dashboard
-    div#chartSpeed
+    div.row
+        div#chartSpeed.col-sm-16
+        div#tableTopBoat.col-sm-8
+            h2 5 fastest boats
+            table.table
+                thead
+                    tr
+                        th #
+                        th Boat
+                        th Average speed
+                tbody
+                    tr
+                        td 1
+                        td Anthony
+                        td 99999
+                    tr
+                        td 2
+                        td Anthony
+                        td 99999
+                    tr
+                        td 3
+                        td Anthony
+                        td 99999
+                    tr
+                        td 4
+                        td Anthony
+                        td 99999
+
+        div#avgHeading.col-sm-8
     p.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
