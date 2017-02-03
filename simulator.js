@@ -3,7 +3,7 @@ var ini = JSON.parse(fs.readFileSync('simulator.ini', 'utf8'));
 var request = require('request');
 var Site = require('./models/Site');
 var Sensor = require('./models/Sensor');
-/* var Mongoose = require('mongoose'); */
+var randomName = require('./lib/randomName');
 
 function sendRequest(sensorData) {
   var options = {
@@ -23,7 +23,7 @@ var sensors = [];
 
 for (var i = 0; i < ini.topology.numberOfPartitions; i++) {
   var site = new Site({
-    name: Math.random().toString(36).substring(7)
+    name: randomName()
   });
   for (j in ini.topology.typesOfSensors) {
     var sensor = new Sensor({

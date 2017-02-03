@@ -33,40 +33,35 @@ block head
 
         var chart = new google.visualization.ColumnChart(
             document.getElementById('chartSpeed'));
-
         chart.draw(data, options);
       }
 block content
     h1 Dashboard
-    div.row
-        div#chartSpeed.col-sm-16
-        div#tableTopBoat.col-sm-8
-            h2 5 fastest boats
-            table.table
-                thead
-                    tr
-                        th #
-                        th Boat
-                        th Average speed
-                tbody
-                    tr
-                        td 1
-                        td Anthony
-                        td 99999
-                    tr
-                        td 2
-                        td Anthony
-                        td 99999
-                    tr
-                        td 3
-                        td Anthony
-                        td 99999
-                    tr
-                        td 4
-                        td Anthony
-                        td 99999
-
-        div#avgHeading.col-sm-8
+    div.container-fluid
+        div.row
+            div.col-xs-12
+                div#chartSpeed
+        div.row
+            div#tableTopBoat.col-xs-12.col-sm-6
+                h2 5 fastest boats
+                table.table.table-hover.table-striped
+                    thead
+                        tr
+                            th #
+                            th Boat
+                            th Average speed
+                    tbody
+                        - var i = 0
+                        for speed in speeds
+                            if i < 5
+                                tr
+                                    td= ++i
+                                    td= speed._id
+                                    td= Math.round(speed.speedAvg * 100) / 100
+            div#avgHeading.col-xs-12.col-sm-6
+                h2 Heading average
+                p.text-center(style="font-size: 5em")
+                    !{Math.floor(headings[0].headingAvg)} °
     p.
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
