@@ -3,7 +3,7 @@ var ini = JSON.parse(fs.readFileSync('simulator.ini', 'utf8'));
 var request = require('request');
 var Site = require('./models/Site');
 var Sensor = require('./models/Sensor');
-var randomName = require('./lib/randomName');
+var randomName = require('./lib/RandomName');
 
 function sendRequest(sensorData) {
   var options = {
