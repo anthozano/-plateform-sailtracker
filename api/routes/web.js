@@ -8,6 +8,8 @@ var DashboardController = require('../controllers/DashboardController');
 var Sensor = require('../models/Sensor');
 var Site = require('../models/Site');
 
+var logger = require('../middlewares/logger')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'SailTracker' });
@@ -33,7 +35,13 @@ router.delete('/users/:id/delete', UserController.delete);
 router.get('/livemap', LiveMapController.index);
 
 // Dashboard
-router.get('/dashboard', DashboardController.index);
+router.get('/dashboard', logger, DashboardController.index);
+
+router.get('/dashboard/speedAverage', logger, DashboardController.speedAverage);
+router.get('/dashboard/top5', logger, DashboardController.top5);
+router.get('/dashboard/headingAverage', logger, DashboardController.headingAverage);
+router.get('/dashboard/activityPie', logger, DashboardController.activityPie);
+router.get('/dashboard/activityTime', logger, DashboardController.activityTime);
 
 var SensorController = require('../controllers/SensorController');
 

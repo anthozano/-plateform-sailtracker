@@ -1,14 +1,10 @@
 
 module.exports = function(req, res, next) {
-  if (req.session.logger) {
-    res.logger = req.session.logger;
-    req.session.logger = undefined;
-  }
-  req.logger = function(type, content) {
-    if (req.session.logger === undefined) {
-      req.session.logger = {};
-    }
-    req.session.logger[type] = content;
-  }
+  // if (!req.session.user) {
+  //   req.session.warning = true;
+  //   res.redirect('/signin');
+  // } else {
+  //   next();
+  // }
   next();
 };

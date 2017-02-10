@@ -3,7 +3,7 @@ var ini = JSON.parse(fs.readFileSync('simulator.ini', 'utf8'));
 var request = require('request');
 var Site = require('./models/Site');
 var Sensor = require('./models/Sensor');
-var randomName = require('./lib/RandomName');
+var Util = require('./lib/Util');
 
 function sendRequest(sensorData) {
   var options = {
@@ -11,44 +11,66 @@ function sendRequest(sensorData) {
     method: 'POST',
     json: sensorData
   };
-  console.log("Sending " + options.method + " request to " + options.uri);
+  // console.log("Sending " + options.method + " request to " + options.uri);
   request(options, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log("Server response: " + body);
+      // console.log("Server response: " + body);
+    } else {
+      console.log("Error" + response.statusCode + " response")
     }
   });
 }
 
-var sensors = [];
 
-for (var i = 0; i < ini.topology.numberOfPartitions; i++) {
-  var site = new Site({
-    name: randomName()
-  });
-  for (j in ini.topology.typesOfSensors) {
-    var sensor = new Sensor({
-      /* _id: Mongoose.Types.ObjectId(), */
-      type: ini.topology.typesOfSensors[j].type,
-      data: [],
-      site: {
-        _id: site._id,
-        name: site.name
-      }
-    });
-    // Building and pushing sensor data array
-    for (k in ini.topology.typesOfSensors[j].data) {
-      var name = ini.topology.typesOfSensors[j].data[k].name + "";
-      var max = ini.topology.typesOfSensors[j].data[k].max;
-      var min = ini.topology.typesOfSensors[j].data[k].min;
-      var data = {};
-      data[name] = (Math.random() * (max - min) + min);
-      sensor.data.push(data);
-    }
-    sensors.push(sensor);
+request({uri: 'http://localhost:3000/simulator/sites', method: 'GET'}, function (err, response, body) {
+  if (!err && response.statusCode == 200) {
+    sendData(JSON.parse(body));
   }
-}
+});
 
-for (s in sensors) {
-  var timer = setInterval(sendRequest, 1000, sensors[s]);
-  setTimeout(clearInterval, ini.runningTime * 1000, timer);
+function sendData(dbSites) {
+  var sites = dbSites;
+  console.log(sites.length + " sites in database, " + ini.topology.numberOfPartitions + " expected");
+  while (sites.length != ini.topology.numberOfPartitions) {
+    if (sites.length > ini.topology.numberOfPartitions) {
+      console.log("removing");
+      for (var h = 0; h < sites.length - ini.topology.numberOfPartitions; h++) {
+        request({uri: 'http://localhost:3000/sensors/' + sites[h]._id, method: 'DELETE'}, function (err, response, body) {
+          if (!err && response.statusCode == 200) { }});
+        sites.splice(h, 1);
+      }
+    } else if (sites.length < ini.topology.numberOfPartitions) {
+      console.log("adding");
+      sites.push(new Site({
+        name: Util.randNameElite()
+      }));
+    }
+  }
+  console.log("nothing more to do");
+
+  var sensors = [];
+
+  for (var i = 0; i < sites.length; i++) {
+    for (j in ini.topology.typesOfSensors) {
+      var sensor = new Sensor({
+        type: ini.topology.typesOfSensors[j].type,
+        data: [],
+        site: {
+          _id: sites[i]._id,
+          name: sites[i].name
+        }
+      });
+      // Building and pushing sensor data array
+      for (k in ini.topology.typesOfSensors[j].data) {
+        var data = {};
+        data[ini.topology.typesOfSensors[j].data[k].name] = (Math.random() * (ini.topology.typesOfSensors[j].data[k].max - ini.topology.typesOfSensors[j].data[k].min) + ini.topology.typesOfSensors[j].data[k].min);
+        sensor.data.push(data);
+      }
+      sensors.push(sensor);
+    }
+  }
+  for (s in sensors) {
+    var timer = setInterval(sendRequest, Math.floor(Math.random() * 1000), sensors[s]);
+    setTimeout(clearInterval, ini.runningTime * 1000, timer);
+  }
 }

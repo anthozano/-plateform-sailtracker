@@ -2,124 +2,62 @@ extends ../layouts/app
 
 block head
     script(type="text/javascript", src="https://www.gstatic.com/charts/loader.js")
-    script(type="text/javascript").
-      google.charts.load('current', {packages: ['corechart', 'bar']});
-      google.charts.setOnLoadCallback(drawBasic);
-
-      function drawBasic() {
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Boat');
-        data.addColumn('number', 'Average speed');
-
-        var datar = [!{datars}];
-        var datah = [!{datahs}];
-        var dataRow = [];
-        for (var i = 0; i < datah.length && i < datar.length; i++) {
-          dataRow.push([datah[i], datar[i]]);
-        }
-        data.addRows(dataRow);
-        var options = {
-          title: 'Speed average per boat',
-          hAxis: {
-            title: 'Boat'
-          },
-          vAxis: {
-            title: 'Speed (kts)'
-          }
-        };
-
-        var chart = new google.visualization.ColumnChart(
-            document.getElementById('chartSpeed'));
-        chart.draw(data, options);
-      }
-
-    script(type="text/javascript").
-        google.charts.load("current", {packages:["corechart"]});
-        google.charts.setOnLoadCallback(drawStatsChart);
-        function drawStatsChart() {
-          var data = new google.visualization.DataTable();
-          data.addColumn('string', 'Boat name');
-          data.addColumn('number', 'Amount of data');
-
-          var activityr = [!{activityrs}];
-          var activityh = [!{activityhs}];
-          var row = [];
-          for (var i = 0; i < activityh.length && i < activityr.length; i++) {
-            row.push([activityh[i], activityr[i]]);
-          }
-          console.log(row);
-
-          data.addRows(row);
-          var options = {
-            title: 'Data sended activity',
-          };
-
-          var chart = new google.visualization.PieChart(document.getElementById('chartStats'));
-          chart.draw(data, options);
-        }
-
-    script(type="text/javascript").
-        var options = {
-            title: 'Test Chart',
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('testChart'));
-        chart.draw(data, options);
-
+    script(type="text/javascript", src="javascripts/dashboard/headingAvg.js")
+    script(type="text/javascript", src="javascripts/dashboard/speedAvg.js")
+    script(type="text/javascript", src="javascripts/dashboard/dataActivity.js")
+    script(type="text/javascript", src="javascripts/dashboard/top5.js")
 block content
-    h1 Dashboard
-    div.container-fluid
-        div.row
-            div.col-xs-12
-                h2 Speed average
-                div#chartSpeed
-        div.row
-            div#tableTopBoat.col-xs-12.col-sm-6
-                h2 5 fastest boats
-                table.table.table-hover.table-striped
-                    thead
-                        tr
-                            th #
-                            th Boat
-                            th Average speed
-                    tbody
-                        - var i = 0
-                        for speed in speeds
-                            if i < 5
-                                tr
-                                    td= ++i
-                                    td= speed._id
-                                    td= Math.round(speed.speedAvg * 100) / 100
-            div#avgHeading.col-xs-12.col-sm-6
-                h2 Heading average
-                - var head = Math.floor(headings[0].headingAvg)
-                p.text-center(style="font-size: 5em")
-                    = head + '°'
-                p.text-center
-                    strong(style="color: #828282")
-                        if head >= 10 && head < 80
-                            ="North east"
-                        if head >= 80 && head < 100
-                            ="East"
-                        if head >= 100 && head < 170
-                            ="South east"
-                        if head >= 170 && head < 190
-                            ="South"
-                        if head >= 190 && head < 260
-                            ="South west"
-                        if head >= 260 && head < 280
-                            ="West"
-                        if head >= 280 && head < 350
-                            ="North west"
-                        if head >= 350 && head <= 360 || head >= 00 && head <= 10
-                            ="North"
-        div.row
-            div.col-xs-12
-                h2 Activity per boat
-                div#chartStats
+    div.row
+        div.col-xs-12
+            h1 Dashboard
+    div.row
+        form.col-xs-12
+            p
+                input#toggleRealtime(type="checkbox")
+                label(for="toggleRealtime")  Toggle realtime rendering
+        div.col-xs-12
+            h2 Speed average
+            div#chartSpeed
+    div.row
+        div#tableTopBoat.col-xs-12.col-sm-6
+            h2 5 fastest boats
+            table.table.table-hover.table-striped
+                thead
+                    tr
+                        th #
+                        th Boat
+                        th Average speed
+                tbody#top5tb
 
-        div.row
-            div.col-xs-12
-                h2 Test chart
-                div#testChart
+        div#avgHeading.col-xs-12.col-sm-6
+            h2 Heading average
+            p.text-center(style="font-size: 5em")
+                span#headingDisplay 0
+                span °
+            p.text-center
+                strong(style="color: #828282")
+                    if head >= 10 && head < 80
+                        ="North east"
+                    if head >= 80 && head < 100
+                        ="East"
+                    if head >= 100 && head < 170
+                        ="South east"
+                    if head >= 170 && head < 190
+                        ="South"
+                    if head >= 190 && head < 260
+                        ="South west"
+                    if head >= 260 && head < 280
+                        ="West"
+                    if head >= 280 && head < 350
+                        ="North west"
+                    if head >= 350 && head <= 360 || head >= 00 && head <= 10
+                        ="North"
+    div.row
+        div.col-xs-12
+            h2 Activity per boat
+            div#chartStats
+
+    div.row
+        dic.col-xs-12
+            a.btn.btn-primary(href="dashboard/mail") Send a summary mail
+
