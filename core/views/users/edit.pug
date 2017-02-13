@@ -1,0 +1,26 @@
+extends ../layouts/app
+
+block content
+    h1 Edit #{user.username}
+    form.col-sm-8(method="POST" action="/users/" + user._id + "/update")
+        div.form-group
+            label(for="name") Name
+            input#name.form-control(type="text", name="name", placeholder="Name" value=user.name)
+        div.form-group
+            label(for="surname") Surname
+            input#surname.form-control(type="text", name="surname", placeholder="Surname" value=user.surname)
+        div.form-group
+            label(for="email") Email
+            input#email.form-control(type="email", name="email", placeholder="Email address" value=user.email)
+        div.form-group
+            label(for="username") Username *
+            input#username.form-control(type="text", name="username", placeholder="Username" value=user.username required)
+        div.form-group
+            label(for="role") Role
+            select#role.form-control(name="role")
+                each role in roles
+                    option(value=role._id)= role.name
+        p
+            button(type="submit" class="btn btn-primary") Submit changes
+            span &nbsp;
+            a(class="btn btn-default" href="/users") Cancel changes

@@ -1,0 +1,32 @@
+nav.navbar.navbar-inverse.navbar-fixed-top
+    div.container
+        div.navbar-header.pull-left
+            a.navbar-brand(href="/") Sailtracker
+            // img(alt="Brand" src="/favicon.ico")
+        div.navbar-header.pull-right
+            button.navbar-toggle.collapsed(type="button", data-toggle="collapse", data-target="#navbar", aria-expanded="false", aria-controls="navbar")
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+            if (loggedUser)
+                ul.navbar-text
+                    span !{loggedUser.username} &nbsp
+                    a(href="/logout") Logout
+
+        div#navbar.collapse.navbar-collapse
+            ul.nav.navbar-nav
+                li.dropdown
+                    a.dropdown-toggle(href="/signin" data-toggle="dropdown") Login
+                        span.caret
+                    ul.dropdown-menu
+                        li
+                            a(href="/signin") Sign in
+                        li
+                            a(href="/signup") Sign up
+                li
+                    a(href="/livemap") LiveMap
+                li
+                    a(href="/dashboard") Dashboard
+                li
+                    a(href="/users") OMC

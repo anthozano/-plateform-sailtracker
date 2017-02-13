@@ -1,0 +1,45 @@
+extends ../layouts/app
+
+block content
+    div.row
+        div.col-xs-12
+            h1 Users
+    div.row
+        div.col-sm-8.col-xs-12
+            div.table-responsive
+                table.table.table-hover.table-striped
+                    thead
+                        tr
+                            th #
+                            th User
+                            th Role
+                            th(colspan="3") Actions
+                    tbody
+                        - var i = 0
+                        each user in users
+                            - i++
+                            tr
+                                td #{i}
+                                td #{user.username}
+                                td #{user.role.name}
+                                td
+                                    a(class="btn btn-default" href='/users/' + user._id) Details
+                                td
+                                    a(class="btn btn-primary" href='/users/' + user._id + '/edit') Edit
+                                td
+                                    a(class="btn btn-danger" href='/users/' + user._id + '/delete') Remove
+
+        div.col-sm-4.col-xs-12
+            aside
+                h4 Users
+                ul
+                    li
+                        a(href="/users") List
+                    li
+                        a(href="/signup") Create
+                    li
+                        a(href="/users/create") Read
+                    li
+                        a(href="/users/create") Update
+                    li
+                        a(href="/users/create") Delete

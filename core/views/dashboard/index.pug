@@ -1,0 +1,86 @@
+extends ../layouts/app
+
+block head
+    script(type="text/javascript", src="https://www.gstatic.com/charts/loader.js")
+    script(type="text/javascript", src="javascripts/dashboard/headingAvg.js")
+    script(type="text/javascript", src="javascripts/dashboard/speedAvg.js")
+    script(type="text/javascript", src="javascripts/dashboard/dataActivity.js")
+    script(type="text/javascript", src="javascripts/dashboard/top5.js")
+    script(type="text/javascript").
+      $(document).ready(function () {
+        $('#sendMail').click(function () {
+        $('#sendMail').after("<p>Sending mail ...</p>");
+        $.ajax({
+            url: "http://localhost:3000/dashboard/mail",
+            method: "POST",
+            dataType: "json",
+            data: {
+              html: $('html')[0].outerHTML
+            },
+            success: function () {
+              $('#sendMail').after("<p>Mail success !</p>");
+            },
+            error: function () {
+              $('#sendMail').after("<p>There was an error sending the mail</p>");
+            }
+          })
+        });
+      });
+
+
+block content
+    div.row
+        div.col-xs-12
+            h1 Dashboard
+    div.row
+        form.col-xs-12
+            div.checkbox.disabled
+                label
+                    input(type="checkbox" name="realtimeToggler" value="realtime" disabled)
+                    = "Toggle realtime rendering"
+        div.col-xs-12
+            h2 Speed average
+            div#chartSpeed
+    div.row
+        div#tableTopBoat.col-xs-12.col-sm-6
+            h2 5 fastest boats
+            table.table.table-hover.table-striped
+                thead
+                    tr
+                        th #
+                        th Boat
+                        th Average speed
+                tbody#top5tb
+
+        div#avgHeading.col-xs-12.col-sm-6
+            h2 Heading average
+            p.text-center(style="font-size: 5em")
+                span#headingDisplay 0
+                span °
+            p.text-center
+                strong(style="color: #828282")
+                    if head >= 10 && head < 80
+                        ="North east"
+                    if head >= 80 && head < 100
+                        ="East"
+                    if head >= 100 && head < 170
+                        ="South east"
+                    if head >= 170 && head < 190
+                        ="South"
+                    if head >= 190 && head < 260
+                        ="South west"
+                    if head >= 260 && head < 280
+                        ="West"
+                    if head >= 280 && head < 350
+                        ="North west"
+                    if head >= 350 && head <= 360 || head >= 00 && head <= 10
+                        ="North"
+    div.row
+        div.col-xs-12
+            h2 Activity per boat
+            div#chartStats
+
+    div.row
+        div.col-xs-12
+            button#sendMail.btn.btn-primary(type="button") Send a summary mail
+

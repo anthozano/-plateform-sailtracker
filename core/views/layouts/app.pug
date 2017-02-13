@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        title Sailtracker
+        link(media='screen', rel='stylesheet', href='/stylesheets/style.css')
+        link(media='print', rel='stylesheet', href='/stylesheets/print.css')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
+        block head
+    body
+        include navbar
+        div.container-fluid
+            if error
+                div.alert.alert-danger
+                    strong #{error}
+            if warning
+                div.alert.alert-warning
+                    strong #{warning}
+            if success
+                div.alert.alert-warning
+                    strong #{success}
+            block content
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+        block scripts
