@@ -1,0 +1,28 @@
+extends ../../layouts/app
+
+block content
+    div.row
+        div.col-xs-12
+            h1 Boats
+    div.row
+        div.col-sm-8.col-xs-12
+            div.table-responsive
+                table.table.table-hover.table-striped
+                    thead
+                        tr
+                            th #
+                            th Name
+                            th(colspan="3") Actions
+                    tbody
+                        - var i = 0
+                        each site in sites
+                            tr
+                                td #{++i}
+                                td #{site.name}
+                                td
+                                    a(class="btn btn-default" href='/sites/' + site._id) Details
+                                td
+                                    a(class="btn btn-primary" href='/sites/' + site._id + '/edit') Edit
+                                td
+                                    a(class="btn btn-danger" href='/sites/' + site._id + '/delete') Remove
+        include ../../layouts/aside

@@ -1,6 +1,10 @@
 extends layouts/app
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  div.row
+    div.col-xs-12
+      div.alert.alert-danger
+        p= message + " (" + error.status + ")"
+  div.row
+    div.col-xs-12
+      pre #{error.stack}

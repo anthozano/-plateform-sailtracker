@@ -10,27 +10,21 @@ var app = express();
 
 // Mailer setup
 mailer.extend(app, {
-  transport: 'SMTP',
-  config: {
-    service: 'Gmail',
+    from: 'sailtracker@anthozano.fr',
+    host: 'auth.smtp.1and1.fr',
+    secureConnection: true,
+    port: 465,
+    transportMethod: 'SMTP',
     auth: {
-      user: 'anthoamx@gmail.com',
-      pass: 'froufrou'
+      user: 'sailtracker@anthozano.fr',
+      pass: 'sailtracker2017'
     }
-  },
-  defaults: {
-    from: 'anthoamx@gmail.com'
-  }
 });
 
 // view engine setup
 app.set('views', path.join(__dirname, '/../views'));
 app.set('view engine', 'pug');
 
-/**
- *
- * @type {{index: DashboardController.index, mail: DashboardController.mail, speedAverage: DashboardController.speedAverage, top5: DashboardController.top5, headingAverage: DashboardController.headingAverage, activityPie: DashboardController.activityPie}}
- */
 var DashboardController = {
   index: function (req, res) {
     res.render('dashboard/index');
@@ -52,15 +46,17 @@ var DashboardController = {
         result.status(500).send(err);
       } else {
         app.mailer.send('mails/report', {
+          from: 'sailtracker@anthozano.fr',
           to: 'sailtracker@anthozano.fr', // REQUIRED. This can be a comma delimited string just like a normal email to field.
           subject: 'BI Report', // REQUIRED.
-          attachments: {
-            filename: "report.pdf",
-            filepath: "ressources/report.pdf"
-          }
+          attachments: [{
+            fileName: "report.pdf",
+            filePath: 'ressources/report.pdf',
+            contentType: 'application/pdf'
+          }]
         }, function (error, response) {
           if (error) {
-            console.log(error);
+            console.log("Error sending mail :\n" + error);
             result.status(500).send(error);
           } else {
             console.log('Message sent: ' + response.message);

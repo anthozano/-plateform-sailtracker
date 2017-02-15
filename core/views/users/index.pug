@@ -29,17 +29,4 @@ block content
                                 td
                                     a(class="btn btn-danger" href='/users/' + user._id + '/delete') Remove
 
-        div.col-sm-4.col-xs-12
-            aside
-                h4 Users
-                ul
-                    li
-                        a(href="/users") List
-                    li
-                        a(href="/signup") Create
-                    li
-                        a(href="/users/create") Read
-                    li
-                        a(href="/users/create") Update
-                    li
-                        a(href="/users/create") Delete
+        include ../layouts/aside

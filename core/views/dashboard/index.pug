@@ -9,19 +9,18 @@ block head
     script(type="text/javascript").
       $(document).ready(function () {
         $('#sendMail').click(function () {
-        $('#sendMail').after("<p>Sending mail ...</p>");
+        $('#mailStatus').html("<p>Sending mail ...<div class='loader'></div></p>");
         $.ajax({
             url: "http://localhost:3000/dashboard/mail",
             method: "POST",
-            dataType: "json",
             data: {
               html: $('html')[0].outerHTML
             },
             success: function () {
-              $('#sendMail').after("<p>Mail success !</p>");
+              $('#mailStatus').html("<p>Mail success !</p>");
             },
             error: function () {
-              $('#sendMail').after("<p>There was an error sending the mail</p>");
+              $('#mailStatus').html("<p>There was an error sending the mail</p>");
             }
           })
         });
@@ -83,4 +82,4 @@ block content
     div.row
         div.col-xs-12
             button#sendMail.btn.btn-primary(type="button") Send a summary mail
-
+            div#mailStatus

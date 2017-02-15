@@ -162,12 +162,13 @@ var UserController = {
    */
   update: function (req, res) {
     console.log(req.body);
-    Role.find({_id: req.body.role}, function (err, role) {
+    Role.findOne({_id: req.body.role}, function (err, role) {
       if (err) {
         console.log(err);
         res.send(err);
       } else {
-        User.findOneAndUpdate({_id: req.body._id}, {
+        console.log(role._id);
+        User.findOneAndUpdate({_id: req.params.id}, {
           name: req.body.name,
           surname: req.body.surname,
           email: req.body.email,
@@ -195,8 +196,14 @@ var UserController = {
    * @param res
    */
   delete: function (req, res) {
-    User.findOneAndRemove({_id: req.params._id}, function (err, user) {
-      res.redirect('/users');
+    console.log(req.params)
+    User.findOneAndRemove({_id: req.params.id}, function (err, user) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        res.redirect('/users');
+      }
     });
   }
 };

@@ -1,21 +1,32 @@
 extends ../layouts/app
 
 block content
-    h1 User detail
-    div.table-responsive
-        table.table.table-hover.table-striped
-            tr
-                th Name
-                td #{user.name}
-            tr
-                th Surname
-                td #{user.surname}
-            tr
-                th Email
-                td #{user.email}
-            tr
-                th Username
-                td #{user.username}
-    div.btn-group
-        a(class="btn btn-primary" href='/users/' + user._id + '/edit') Edit
-        a(class="btn btn-danger" href='/users/' + user._id + '/delete') Remove
+    div.row
+        div.col-xs-12
+            h1 User detail
+    div.row
+        div.col-xs-12
+            div.table-responsive
+                table.table.table-hover.table-striped
+                    tr
+                        th Name
+                        td #{user.name}
+                    tr
+                        th Surname
+                        td #{user.surname}
+                    tr
+                        th Email
+                        td #{user.email}
+                    tr
+                        th Username
+                        td #{user.username}
+                    tr
+                        th Role
+                        td #{user.role.name}
+    div.row
+        div.col-xs-12
+            p
+                a(class="btn btn-primary" href='/users/' + user._id + '/edit') Edit
+                span &nbsp;
+                form(action='/users/' + user._id + '/delete' method="POST")
+                    input(type="submit" class="btn btn-danger" value="Remove")

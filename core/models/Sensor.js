@@ -9,6 +9,4 @@ var sensorSchema = mongoose.Schema({
   }
 }, {timestamps: true});
 
-var Sensor = mongoose.model('sensor', sensorSchema);
-
-module.exports = Sensor;
+module.exports = mongoose.model('sensor', sensorSchema);

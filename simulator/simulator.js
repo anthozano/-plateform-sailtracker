@@ -1,8 +1,9 @@
 var fs = require('fs');
-var ini = JSON.parse(fs.readFileSync('simulator.ini', 'utf8'));
 var request = require('request');
 var mongoose = require('mongoose');
+var Site = require('../core/models/Site');
 var Util = require('./lib/Util');
+var ini = JSON.parse(fs.readFileSync('simulator.ini', 'utf8'));
 
 function sendRequest(sensorData) {
   var options = {
@@ -29,23 +30,21 @@ request({uri: 'http://localhost:3000/simulator/sites', method: 'GET'}, function 
 
 function sendData(dbSites) {
   var sites = dbSites;
-  console.log(sites.length + " sites in database, " + ini.topology.numberOfPartitions + " expected");
+  console.log(dbSites.length + " sites in database, " + ini.topology.numberOfPartitions + " expected");
   while (sites.length != ini.topology.numberOfPartitions) {
     if (sites.length > ini.topology.numberOfPartitions) {
-      console.log("removing");
+      console.log("removing one from simulator");
       for (var h = 0; h < sites.length - ini.topology.numberOfPartitions; h++) {
-        request({uri: 'http://localhost:3000/sensors/' + sites[h]._id, method: 'DELETE'}, function (err, response, body) {
-          if (!err && response.statusCode == 200) { }});
         sites.splice(h, 1);
       }
     } else if (sites.length < ini.topology.numberOfPartitions) {
-      console.log("adding");
-      sites.push({
+      console.log("adding one in simulator");
+      sites.push(new Site({
         name: Util.randNameElite()
-      });
+      }));
     }
   }
-  console.log("nothing more to do");
+  console.log("nothing more to do, sending sensor data");
 
   var sensors = [];
 

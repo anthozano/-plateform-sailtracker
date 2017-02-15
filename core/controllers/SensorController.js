@@ -6,19 +6,19 @@ var SensorController = {
 
   create: function (req, res) {
     var sensor = new Sensor(req.body);
-    sensor._id = Mongoose.Types.ObjectId();
-    sensor.save(function (err, s) {
+    sensor.save(function (err, sensor) {
       if (err) {
         res.sendStatus(400);
         console.log(err);
       } else {
-        Site.findOne({_id: s.site._id}, function (err, site) {
-          if (!err && !site) {
-            var etis = new Site({
-              _id: s.site._id,
-              name: s.site.name
+        Site.findOne({_id: sensor.site._id}, function (err, site) {
+          if (!err && site == null) {
+            site = new Site({
+              _id: sensor.site._id,
+              name: sensor.site.name
             });
-            etis.save();
+            site.save();
+            console.log(Mongoose.Schema.Types.ObjectId);
             res.sendStatus(200);
           } else if (err) {
             res.sendStatus(400);

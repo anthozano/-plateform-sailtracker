@@ -33,6 +33,7 @@ var webRoutes = require('./routes/web');
 var sensorsRoutes = require('./routes/sensors');
 var simulatorRoutes = require('./routes/simulator');
 var biRoutes = require('./routes/bi');
+var omcRoutes = require('./routes/omc');
 
 var app = express();
 var methodOverride = require('method-override')
@@ -77,6 +78,7 @@ app.use(sensorsRoutes);
 app.use(webRoutes);
 app.use(simulatorRoutes);
 app.use(biRoutes);
+app.use(omcRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

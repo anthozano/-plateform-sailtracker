@@ -19,7 +19,10 @@ block content
             label(for="role") Role
             select#role.form-control(name="role")
                 each role in roles
-                    option(value=role._id)= role.name
+                    if (role._id.equals(user.role._id))
+                        option(value=role._id selected)= role.name
+                    else
+                        option(value=role._id)= role.name
         p
             button(type="submit" class="btn btn-primary") Submit changes
             span &nbsp;
