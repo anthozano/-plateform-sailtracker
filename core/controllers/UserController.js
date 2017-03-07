@@ -10,6 +10,10 @@ var UserController = {
    * @param res
    */
   signin: function (req, res) {
+    if (req.session.message) {
+      res.locals.message = req.session.message;
+      req.session.message = undefined;
+    }
     if (req.session.warning) {
       req.session.warning = undefined;
       res.render('users/signin', {warning: "You're not allowed to access this page, you've been redirected here."});
