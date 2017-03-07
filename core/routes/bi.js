@@ -3,7 +3,7 @@ var router = express.Router();
 
 var DashboardController = require('../controllers/DashboardController');
 
-var logger = require('../middlewares/logger');
+var logger = require('../middlewares/auth');
 
 // Dashboard
 router.get('/dashboard', logger, DashboardController.index);

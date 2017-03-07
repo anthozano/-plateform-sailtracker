@@ -1,16 +1,20 @@
 extends ../layouts/app
 
+
 block content
-    h1 Signin
-    div.col-sm-8
-        form(method="POST" action="/signin")
-            div.form-group
-                label(for="username") Username
-                input#username.form-control(type="text", name="username", placeholder="Username")
-            div.form-group
-                label(for="password") Password
-                input#password.form-control(type="password", name="password", placeholder="Password")
-            div.btn-group
-                button(type="submit" class="btn btn-primary") Submit
-                a.btn.btn-default(href="/signup") No account yet ? Register here !
+    div.row
+        div.col-sm-8
+            h1 Signin
+    div.row
+        div.col-sm-8
+            form(method="POST" action="/signin")
+                div.form-group
+                    label(for="username") Username
+                    input#username.form-control(type="text", name="username", placeholder="Username")
+                div.form-group
+                    label(for="password") Password
+                    input#password.form-control(type="password", name="password", placeholder="Password")
+                div.btn-group
+                    button(type="submit" class="btn btn-primary") Submit
+                    a.btn.btn-default(href="/signup") No account yet ? Register here !
 

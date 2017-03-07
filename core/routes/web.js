@@ -8,17 +8,18 @@ var DashboardController = require('../controllers/DashboardController');
 var Sensor = require('../models/Sensor');
 var Site = require('../models/Site');
 
-var logger = require('../middlewares/logger');
+var logger = require('../middlewares/auth');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'SailTracker' });
 });
 
-router.use(logger);
 // User
 router.get('/signin', UserController.signin);
 router.post('/signin', UserController.login);
+
+router.use(logger);
 
 router.get('/signup', UserController.signup);
 router.get('/home', UserController.home);

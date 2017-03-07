@@ -1,0 +1,12 @@
+if message
+    div.row
+        div.col-xs-12(style="margin-top: 40px")
+            if message.level == 'danger'
+                div.alert.alert-danger
+                    strong #{message.message}
+            if message.level == 'warning'
+                div.alert.alert-warning
+                    strong #{message.message}
+            if message.level == 'success'
+                div.alert.alert-warning
+                    strong #{message.message}
