@@ -1,10 +1,7 @@
-
-module.exports = function(req, res, next) {
-  if (!req.session.user) {
-    // req.session.warning = true;
-    // res.redirect('/signin');
+module.exports = function (req, res, next) {
+  if (req.session.user) {
+    next()
   } else {
-    res.locals.loggedUser = req.session.user;
+    res.redirect('/signin');
   }
-  next();
 };

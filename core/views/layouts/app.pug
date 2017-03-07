@@ -10,17 +10,6 @@ html
     body
         include navbar
         div.container-fluid
-            div.row
-                div.col-xs-12
-                    if danger
-                        div.alert.alert-danger
-                            strong #{danger}
-                    if warning
-                        div.alert.alert-warning
-                            strong #{warning}
-                    if success
-                        div.alert.alert-warning
-                            strong #{success}
             block content
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
         block scripts

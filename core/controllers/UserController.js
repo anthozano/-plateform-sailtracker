@@ -19,41 +19,29 @@ var UserController = {
   },
   
   /**
-   * Holds user login
+   * Holds user login.js
    * @param req
    * @param res
    */
   login: function (req, res) {
-    if (req.session.attempt) {
-      req.session.attempt = req.session.attempt + 1;
-    } else {
-      req.session.attempt = 1;
-    }
-    if (req.session.attempt < 4) {
-      console.log({
-        username: req.body.username,
-        password: passwordHash.generate(req.body.username)
-      });
-      User.findOne({
-        username: req.body.username
-      }, function (err, user) {
-        if (err) return console.error(err);
-        if (user) {
+    User.findOne({
+      username: req.body.username
+    }, function (err, user) {
+      if (err) return console.error(err);
+      if (user) {
+        console.log(user);
+        if (passwordHash.verify(req.body.password, user.password)) {
+          req.session.user.logged = true;
+          req.session.user.attempt = 0;
+          req.session.user = user;
+          res.redirect('/home');
+        } else {
+          console.log("Wrong username/password");
           console.log(user);
-          if (passwordHash.verify(req.body.password, user.password)) {
-            req.session.attempt = 0;
-            req.session.user = user;
-            res.redirect('/home');
-          } else {
-            console.log("Wrong username/password");
-            console.log(user);
-            res.render('users/signin', {warning: "Wrong username/password"});
-          }
+          res.redirect('/signin');
         }
-      });
-    } else {
-      res.render('users/signin', {error: "Sorry, it's at least your 3rd attempt to login and fail, you are now blocked !"});
-    }
+      }
+    });
   },
   
   /**
@@ -62,12 +50,7 @@ var UserController = {
    * @param res
    */
   home: function (req, res) {
-    if (req.session.user) {
-      res.render('users/home', {username: req.session.user.username});
-    } else {
-      req.session.warning = true;
-      res.redirect('/signin');
-    }
+    res.render('users/home');
   },
   
   /**
