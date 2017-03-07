@@ -148,7 +148,6 @@ var UserController = {
           console.log(err);
           res.send(err);
         } else {
-          console.log(results[0]._id);
           res.render('users/edit', {user: user, roles: results});
         }
       });
