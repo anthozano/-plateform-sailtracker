@@ -1,5 +1,7 @@
 extends ../layouts/app
 
 block content
-    h1 Welcome, #{username}
+    h1 Welcome, !{loggedUser.username}
     p.alert.alert-success You have succesfully logged-in !
+    p.
+        You are !{loggedUser.role.name} user, your access authorisations might be restricted

@@ -15,13 +15,15 @@ var pdf = require('html-pdf');
 var mongoose = require('mongoose');
 // var Role = require('./Models/Role');
 mongoose.connect('mongodb://localhost/sailtracker');
-//
+
 // Role.create({
 //   name: "Admin"
 // });
-//
 // Role.create({
-//   name: "User"
+//   name: "Gold"
+// });
+// Role.create({
+//   name: "Silver"
 // });
 
 var app = express();

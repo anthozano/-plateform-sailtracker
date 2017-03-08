@@ -3,7 +3,7 @@ var Role = require('../models/Role');
 var passwordHash = require('password-hash');
 
 var UserController = {
-  
+
   /**
    * Render the user signin page
    * @param req
@@ -21,7 +21,7 @@ var UserController = {
       res.render('users/signin');
     }
   },
-  
+
   /**
    * Holds user login.js
    * @param req
@@ -35,8 +35,6 @@ var UserController = {
       if (user) {
         console.log(user);
         if (passwordHash.verify(req.body.password, user.password)) {
-          req.session.user.logged = true;
-          req.session.user.attempt = 0;
           req.session.user = user;
           res.redirect('/home');
         } else {
@@ -47,7 +45,7 @@ var UserController = {
       }
     });
   },
-  
+
   /**
    * Render the user home page
    * @param req
@@ -56,7 +54,7 @@ var UserController = {
   home: function (req, res) {
     res.render('users/home');
   },
-  
+
   /**
    * Render the user signup page
    * @param req
@@ -65,7 +63,7 @@ var UserController = {
   signup: function (req, res) {
     res.render('users/signup');
   },
-  
+
   /**
    * Logs out the user
    * @param req
@@ -76,31 +74,42 @@ var UserController = {
       req.session.user = undefined;
     res.redirect("/");
   },
-  
+
   /**
    * Create an user
    * @param req
    * @param res
    */
   create: function (req, res) {
-    var user = new User(req.body);
-    User.findOne({username: user.username}, function (err, dbUser) {
-      console.log(dbUser);
-      if (err) {
-        console.log(err);
-      } else {
-        if (dbUser == null) {
-          user.password = passwordHash.generate(req.body.password);
-          user.save();
-          req.session.user = user;
-          res.redirect('/home');
-        } else {
-          res.render('users/signup', {error: "User already exists"});
+    Role.findOne({name: 'Silver'}, function (err, role) {
+      var user = new User({
+        name: req.body.name,
+        surname: req.body.surname,
+        email: req.body.email,
+        username: req.body.username,
+        role: {
+          _id: role._id,
+          name: role.name
         }
-      }
+      });
+      User.findOne({username: user.username}, function (err, dbUser) {
+        console.log(dbUser);
+        if (err) {
+          console.log(err);
+        } else {
+          if (dbUser == null) {
+            user.password = passwordHash.generate(req.body.password);
+            user.save();
+            req.session.user = user;
+            res.redirect('/home');
+          } else {
+            res.render('users/signup', {error: "User already exists"});
+          }
+        }
+      });
     });
   },
-  
+
   /**
    * Index/list the users
    * @param req
@@ -111,7 +120,7 @@ var UserController = {
       res.render('users/index', {users: users});
     });
   },
-  
+
   /**
    * Read an user
    * @param req
@@ -122,7 +131,7 @@ var UserController = {
       res.render('users/show', {user: user});
     });
   },
-  
+
   /**
    * Edit an user
    * @param req
@@ -140,7 +149,7 @@ var UserController = {
       });
     });
   },
-  
+
   /**
    * Update an user
    * @param req
@@ -175,7 +184,7 @@ var UserController = {
     });
     res.redirect('/users');
   },
-  
+
   /**
    * Delete an user
    * @param req

@@ -1,7 +1,7 @@
 module.exports = function (req, res, next) {
   if (req.session.user) {
     res.locals.loggedUser = req.session.user;
-    if (req.session.user.role.name == "Admin") {
+    if (req.session.user.role.name == "Admin" || req.session.user.role.name == "Gold" ) {
       next();
     } else {
       var error = {

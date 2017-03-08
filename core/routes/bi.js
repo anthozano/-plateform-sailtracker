@@ -7,10 +7,10 @@ var logger = require('../middlewares/auth');
 
 // Dashboard
 router.get('/dashboard', logger, DashboardController.index);
-router.get('/dashboard/speedAverage', logger, DashboardController.speedAverage);
-router.get('/dashboard/top5', logger, DashboardController.top5);
-router.get('/dashboard/headingAverage', logger, DashboardController.headingAverage);
-router.get('/dashboard/activityPie', logger, DashboardController.activityPie);
-router.post('/dashboard/mail', logger, DashboardController.mail);
+router.get('/dashboard/speedAverage', DashboardController.speedAverage);
+router.get('/dashboard/top5', DashboardController.top5);
+router.get('/dashboard/headingAverage', DashboardController.headingAverage);
+router.get('/dashboard/activityPie', DashboardController.activityPie);
+router.post('/dashboard/mail', DashboardController.mail);
 
 module.exports = router;
