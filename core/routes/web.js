@@ -49,7 +49,7 @@ router.get("/sites/:id/show", admin, SiteController.show);
 router.get("/sites/:id/edit",admin, SiteController.edit);
 
 // Dashboard
-router.get('/dashboard', admin, DashboardController.index);
+router.get('/dashboard', gold, DashboardController.index);
 
 
 module.exports = router;

@@ -23,10 +23,18 @@ block content
                     tr
                         th Role
                         td #{user.role.name}
+                    tr
+                        th Api secret key
+                        td #{user.api_secret}
     div.row
         div.col-xs-12
-            p
-                a(class="btn btn-primary" href='/users/' + user._id + '/edit') Edit
-                span &nbsp;
-                form(action='/users/' + user._id + '/delete' method="POST")
-                    input(type="submit" class="btn btn-danger" value="Remove")
+            table.table
+                tr
+                    td
+                        a(class="btn btn-default" href='/users') Cancel
+                    td
+                        a(class="btn btn-primary" href='/users/' + user._id + '/edit') Edit
+                    td
+                        form(action='/users/' + user._id + '/delete' method="POST")
+                            input(type="submit" class="btn btn-danger" value="Remove")
+

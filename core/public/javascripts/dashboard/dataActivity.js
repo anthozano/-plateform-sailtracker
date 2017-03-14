@@ -5,7 +5,7 @@ function drawStatsChart() {
   data.addColumn('string', 'Boat name');
   data.addColumn('number', 'Amount of data');
   $.ajax({
-    url: "http://localhost:3000/dashboard/speedAverage",
+    url: "https://localhost:3000/dashboard/speedAverage",
     method: "GET",
     dataType: "json",
     success: function (results) {

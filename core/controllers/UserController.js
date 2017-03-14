@@ -1,7 +1,8 @@
 var User = require('../models/User');
 var Role = require('../models/Role');
 var passwordHash = require('password-hash');
-
+var sha1 = require('sha1');
+  
 var UserController = {
 
   /**
@@ -23,7 +24,7 @@ var UserController = {
   },
 
   /**
-   * Holds user login.js
+   * Holds user login
    * @param req
    * @param res
    */
@@ -33,13 +34,10 @@ var UserController = {
     }, function (err, user) {
       if (err) return console.error(err);
       if (user) {
-        console.log(user);
         if (passwordHash.verify(req.body.password, user.password)) {
           req.session.user = user;
           res.redirect('/home');
         } else {
-          console.log("Wrong username/password");
-          console.log(user);
           res.redirect('/signin');
         }
       }
@@ -90,7 +88,8 @@ var UserController = {
         role: {
           _id: role._id,
           name: role.name
-        }
+        },
+        api_secret: sha1(req.body.username)
       });
       User.findOne({username: user.username}, function (err, dbUser) {
         console.log(dbUser);
@@ -201,6 +200,7 @@ var UserController = {
       }
     });
   }
+
 };
 
 module.exports = UserController;

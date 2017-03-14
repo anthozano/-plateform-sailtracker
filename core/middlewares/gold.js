@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
     } else {
       var error = {
         level: "warning",
-        message: "Not allowed, admin only"
+        message: "Not allowed, admin or gold only"
       };
       req.session.message = error;
       res.redirect('/');

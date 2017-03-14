@@ -27,6 +27,7 @@ block content
                                 td
                                     a(class="btn btn-primary" href='/users/' + user._id + '/edit') Edit
                                 td
-                                    a(class="btn btn-danger" href='/users/' + user._id + '/delete') Remove
+                                    form(action='/users/' + user._id + '/delete' method="POST")
+                                        input(type="submit" class="btn btn-danger" value="Remove")
 
         include ../layouts/aside

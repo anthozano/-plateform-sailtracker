@@ -7,7 +7,7 @@ function drawBasic() {
   data.addColumn('number', 'Average speed');
 
   $.ajax({
-    url: "http://localhost:3000/dashboard/speedAverage",
+    url: "https://localhost:3000/dashboard/speedAverage",
     method: "GET",
     dataType: "json",
     success: function (results) {

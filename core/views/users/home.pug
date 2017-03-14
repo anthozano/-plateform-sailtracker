@@ -3,5 +3,11 @@ extends ../layouts/app
 block content
     h1 Welcome, !{loggedUser.username}
     p.alert.alert-success You have succesfully logged-in !
-    p.
-        You are !{loggedUser.role.name} user, your access authorisations might be restricted
+    if loggedUser.role.name == 'lAdmin'
+        p You are an <strong>!{loggedUser.role.name}</strong> user, you a full access to the plateform.
+    else
+        p You are a <strong>!{loggedUser.role.name}</strong> user, your access authorisations might be restricted.
+        ul
+            li <strong>Admin</strong> users have full access
+            li <strong>Gold</strong> users can access the dashboard & livemap pages
+            li <strong>Silver</strong> users can only access the livemap page

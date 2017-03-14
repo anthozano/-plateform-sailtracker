@@ -1,6 +1,6 @@
 function top5() {
   $.ajax({
-    url: "http://localhost:3000/dashboard/top5",
+    url: "https://localhost:3000/dashboard/top5",
     method: "GET",
     dataType: "json",
     success: function (results) {

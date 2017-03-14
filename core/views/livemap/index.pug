@@ -7,6 +7,32 @@ block content
     div#map
     script.
       var map;
+      function boatPanel(boat) {
+        return "<h3>Boat details</h3>"
+            +  "<hr>"
+            +  "<p><strong>Name</strong>: " + boat.name  + "</p>"
+            +  "<p><strong>Latitude</strong>: " + boat.lat  + "</p>"
+            +  "<p><strong>Longitude</strong>: " + boat.lng  + "</p>";
+      }
+      function addBoatOnMap(map, boat) {
+        var infowindow = new google.maps.InfoWindow({
+          content: boatPanel(boat)
+        });
+        var marker = new google.maps.Marker({
+          map: map,
+          position: {lat: boat.lat, lng: boat.lng},
+          title: boat.name,
+          icon: {
+            scale: 2.5,
+            rotation: Math.random() * 360,
+              /*  url: '/images/boat-icon.png'*/
+            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
+          }
+        });
+        marker.addListener('click', function () {
+          infowindow.open(map, marker);
+        });
+      }
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 46.08, lng: -1.25},
@@ -14,17 +40,7 @@ block content
         });
         var data = !{boats};
         for (var i = 0; i < data.length; i++) {
-          console.log(i)
-          var marker = new google.maps.Marker({
-            map: map,
-            position: {lat: data[i].lat, lng: data[i].lng},
-            title: data[i].name,
-            icon: {
-              scale: 1,
-              rotation: 90,
-              url: '/images/boat-icon.png'
-            }
-          });
+            addBoatOnMap(map, data[i]);
         }
       }
 
